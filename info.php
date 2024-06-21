@@ -14,9 +14,9 @@ else
 {
 
     $serveur='127.0.0.1';
-    $port='3000';
+    $port='2000';
     $user='root';
-    $pwd='root';
+    $pwd='P&wP&w2001';
     $db='collage';
 }
 
