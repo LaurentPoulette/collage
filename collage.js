@@ -12,10 +12,10 @@ var curSuccsess = null;
 var curError = null;
 var realPos = null;
 var curIdx = -1;
-var bAutoPan=false;
-var bLocating=false;
-var route=null;
-var tabSelect=[];
+var bAutoPan = false;
+var bLocating = false;
+var route = null;
+var tabSelect = [];
 
 
 
@@ -27,7 +27,15 @@ $(window).on("resize orientationchange", function () {
   ScaleContentToDevice();
 });
 
+function hideChoix(bHide) {
 
+  if (bHide) {
+    $('#bBoucle').hide();
+  }
+  else {
+    $('#bBoucle').show();
+  }
+}
 
 function ScaleContentToDevice() {
 
@@ -64,13 +72,14 @@ function init() {
   //document.getElementById('table_iti').style.overflowY = 'scroll';
   //document.getElementById('table_iti').style.height = '90%';
 
-  $('#bPanneau').hide();
+  //$('#bPanneau').hide();
 
   $('#Boucle input').click(listPanneau);
   $('#Boucle select').change(listPanneau);
   send('init', null, after_init, after_init);
 
-  window.setInterval(autoPan,1000);
+  window.setInterval(autoPan, 1000);
+
 
 }
 
@@ -79,7 +88,7 @@ function after_init(response) {
   if (response.err == 0) {
 
 
-    $('#bBoucle').show();
+    hideChoix(isIti);
     $('#bMap').show();
     var pos = response.pos;
 
@@ -101,8 +110,7 @@ function after_init(response) {
 
 
   }
-  else
-  {
+  else {
     alert(response.msg)
   }
 
@@ -110,281 +118,303 @@ function after_init(response) {
 
 
 function initMap() {
-  
 
-  if ($('#Map')[0].style.display!='none')
-  {
 
-  L.Icon.Default.imagePath = 'leaflet/images/';
-  var nbTrue = 0; var nbFalse = 0;
-  var coord = [45.64939700471602, 0.1598302353428778];
-  //var coord = panneaux[0]['coord'].replace(' ', '').split(",");
+  if ($('#Map')[0].style.display != 'none') {
 
-  if (!mapLoaded) {
-    map = L.map('Map').setView([coord[0], coord[1]], 13);
-    L.geolet({
-      position: 'bottomleft'
-    }).addTo(map, {
-      autoPan: true
-    }).activate();
-    /*
-        popup = L.popup().setContent('<p>Hello world!<br />This is a nice popup.</p>'); 
-        map.on('contextmenu',function(){
-          map.openPopup(popup);
+    L.Icon.Default.imagePath = 'leaflet/images/';
+    var nbTrue = 0; var nbFalse = 0;
+    var coord = [45.64939700471602, 0.1598302353428778];
+    //var coord = panneaux[0]['coord'].replace(' ', '').split(",");
+
+    if (!mapLoaded) {
+      map = L.map('Map').setView([coord[0], coord[1]], 13);
+      L.geolet({
+        position: 'bottomleft'
+      }).addTo(map, {
+        autoPan: true
+      }).activate();
+      /*
+          popup = L.popup().setContent('<p>Hello world!<br />This is a nice popup.</p>'); 
+          map.on('contextmenu',function(){
+            map.openPopup(popup);
+        });
+        */
+      map.on('contextmenu', (e) => {
+        L.popup()
+          .setLatLng(e.latlng)
+          .setContent('<table><tr><td><a href="#" onclick="setStart()">Départ</a>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="#" onclick="setStop()">Arrivée</a>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="#" onclick="newPanneau(-1)">Nouveau&nbsp;panneau</a>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>')
+          .addTo(map)
+          .openOn(map);
+        setCurPos(e.latlng);
+
+
+
       });
-      */
-    map.on('contextmenu', (e) => {
-      L.popup()
-        .setLatLng(e.latlng)
-        .setContent('<table><tr><td><a href="#" onclick="setStart()">Départ</a>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="#" onclick="setStop()">Arrivée</a>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="#" onclick="newPanneau()">Nouveau panneau</a>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>')
-        .addTo(map)
-        .openOn(map);
-      setCurPos(e.latlng);
 
-
-
-    });
-
-  }
-  else {
-
-    for (var i = 0; i < markers.length; i++) {
-      map.removeLayer(markers[i]);
     }
-    markers = [];
+    else {
 
-    for (var i = 0; i < markersPos.length; i++) {
-      map.removeLayer(markersPos[i]);
-    }
-    markersPos = [];
-    var popups = $(".leaflet-popup-close-button");
-    for (var i = 0; i < popups.length; i++) {
-      popups[i].click();
-    }
-
-
-  }
-
-
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-
-
-
-
-  for (var i = 0; i < panneaux.length; i++) {
-    
-    var coord = panneaux[i]['coord'].replace(' ', '').split(",");
-    var icon = greenIcon;
-    var officiel = (panneaux[i]['officiel'] == 'TRUE') ? 'Officiel' : 'Libre';
-    //var nom = panneaux[i]["nom_aff"];
-    var nom = panneaux[i]["ville"];
-var nom = panneaux[i]["nom_aff"]+'<br>'+panneaux[i]["ville"]+'<br>'+panneaux[i]["last"]+' h='+ panneaux[i]["heures"];
-    var popup = nom + ' ' + officiel;
-    var statut = panneaux[i]['statut_iti'];
-    var heures = panneaux[i]['heures'];
-
-    var trancheHeure = 0;
-
-
-    if (officiel=='Officiel')
-    {
-      if (heures > 48) {
-        trancheHeure = 1;
+      for (var i = 0; i < markers.length; i++) {
+        map.removeLayer(markers[i]);
       }
-      if (heures > 72) {
-        trancheHeure = 2;
+      markers = [];
+
+      for (var i = 0; i < markersPos.length; i++) {
+        map.removeLayer(markersPos[i]);
       }
-      if (heures > 96) {
+      markersPos = [];
+      var popups = $(".leaflet-popup-close-button");
+      for (var i = 0; i < popups.length; i++) {
+        popups[i].click();
+      }
+
+
+    }
+
+
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+
+
+
+    for (var i = 0; i < panneaux.length; i++) {
+
+      var coord = panneaux[i]['coord'].replace(' ', '').split(",");
+      var icon = greenIcon;
+      var officiel = (panneaux[i]['officiel'] == 'TRUE') ? 'Officiel' : 'Libre';
+      //var nom = panneaux[i]["nom_aff"];
+      var nom = panneaux[i]["ville"];
+      var nom = panneaux[i]["nom_aff"] + '<br>' + panneaux[i]["ville"] + '<br>' + panneaux[i]["last"] + ' h=' + panneaux[i]["heures"];
+      var popup = nom + ' ' + officiel;
+      var statut = panneaux[i]['statut_iti'];
+      var heures = panneaux[i]['heures'];
+
+      var trancheHeure = 0;
+
+
+      if (officiel == 'Officiel') {
+        if (heures > 48) {
+          trancheHeure = 1;
+        }
+        if (heures > 72) {
+          trancheHeure = 2;
+        }
+        if (heures > 96) {
+          trancheHeure = 3;
+        }
+      }
+      else {
+        if (heures > 8) {
+          trancheHeure = 1;
+        }
+        if (heures > 24) {
+          trancheHeure = 2;
+        }
+        if (heures > 48) {
+          trancheHeure = 3;
+        }
+      }
+
+      if (panneaux[i]["heures"].search('2023') != -1) {
         trancheHeure = 3;
       }
+
+      if (statut == 0) {
+        color = 'red';
+        addClassList = 'list_todo';
+
+      }
+      if (statut == 1) {
+        color = 'green';
+        addClassList = 'list_done';
+      }
+
+      if (i == curIdx + 1) {
+        if (statut == 0) {
+          color = 'blue';
+          addClassList = 'list_current';
+        }
+      else
+        {
+          curIdx = curIdx + 1;
+        }
+      }
+
+      if (tabSelect.indexOf(panneaux[i]['id']) !== -1) {
+        color = 'selected';
+      }
+
+
+
+
+
+      popup = "<table>";
+      popup += "<tr><td colspan=4>" + panneaux[i]['id'] + '&nbsp;:&nbsp;' + nom.replace(/ /gi, '&nbsp;') + '&nbsp;(' + officiel + ')' + "</td></tr>";
+      popup += "<tr><td ><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>&nbsp;&nbsp;&nbsp;</td>";
+      popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="checkPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Fait</a>&nbsp;&nbsp;&nbsp;</td>';
+      popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="uncheckPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">KO</a>&nbsp;&nbsp;&nbsp;</td></tr>';
+      popup += '<tr><td ><a href="" onclick="ajusterPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Ajuster&nbsp;position</a></td>';
+      popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Editer</a></td></tr>';
+      popup += '<tr><td><a href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Sélection</a></td>';
+      if (tabSelect.length > 0) {
+        popup += '<td  colspan=2>&nbsp;&nbsp;&nbsp;<a href="" onclick="selection_save()">Enregistrer sélection</a></td>';
+      }
+
+      popup += '</tr></table>';
+
+
+
+
+
+
+
+      //var icon = new L.TextIcon({ text: '<span class="numMarker numHeure_' + trancheHeure + '">' + (i + 1) + '</span>', color: color });
+
+
+      instanceclass = '';
+      var icon = L.divIcon({
+        iconSize: null,
+        html: '<div class="map-label bord_' + color + ' numHeure_' + trancheHeure + '"><div class="map-label-content">' + (i + 1) + '</div><div class="map-label-arrow"></div></div>'
+      });
+
+      try {
+
+        /*
+        panneaux[i].marker = L.marker([coord[0], coord[1]], { icon: icon }).addTo(map).bindPopup(popup);
+        markers.push(panneaux[i].marker);
+        */
+        markers.push(L.marker([coord[0], coord[1]], { icon: icon }).addTo(map).bindPopup(popup));
+
+      } catch (error) {
+        console.log('erreur : ' + popup);
+      }
+
     }
-    else
-    {
-    if (heures > 8) {
-      trancheHeure = 1;
+
+
+    //alert(nbTrue+'\n'+nbFalse);
+
+
+
+
+    if (posStart != null) {
+      instanceclass = '';
+      var icon = L.divIcon({
+        iconSize: null,
+        html: '<div class="map-label ' + instanceclass + '"><div class="map-label-content">Départ</div><div class="map-label-arrow"></div></div>'
+      });
+      //posStart.marker = ;
+      markersPos.push(L.marker([posStart.lat, posStart.lng], { icon: icon }).addTo(map));
+
     }
-    if (heures > 24) {
-      trancheHeure = 2;
+    if (posStop != null) {
+      instanceclass = '';
+      var icon = L.divIcon({
+        iconSize: null,
+        html: '<div class="map-label ' + instanceclass + '"><div class="map-label-content">Arrivée</div><div class="map-label-arrow"></div></div>'
+      });
+      //posStop.marker = ;
+      markersPos.push(L.marker([posStop.lat, posStop.lng], { icon: icon }).addTo(map));
+
     }
-    if (heures > 48) {
-      trancheHeure = 3;
-    }
+    mapLoaded = true;
   }
-
-if ( panneaux[i]["heures"].search('2023')!=-1)
-  {
-    trancheHeure = 3;
-  }
-
-    if (statut == 0) {
-      color = 'red';
-      addClassList='list_todo';
-
-    }
-    if (statut == 1) {
-      color = 'green';
-      addClassList='list_done';
-    }
-
-    if (i==curIdx+1)
-    {
-      color = 'blue';
-      addClassList='list_current';
-    }
-
-    if (tabSelect.indexOf(panneaux[i]['id'])!==-1){
-      color = 'selected';
-    }
-
-    
-
-    
-
-    popup = "<table>";
-    popup += "<tr><td colspan=4>" + panneaux[i]['id']+'&nbsp;:&nbsp;'+nom.replace(/ /gi, '&nbsp;') +'&nbsp;('+officiel+')'+ "</td></tr>";
-    popup += "<tr><td ><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>&nbsp;&nbsp;&nbsp;</td>";
-    popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="checkPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Fait</a>&nbsp;&nbsp;&nbsp;</td>';
-    popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="uncheckPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">KO</a>&nbsp;&nbsp;&nbsp;</td></tr>';
-    popup += '<tr><td ><a href="" onclick="ajusterPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Ajuster&nbsp;position</a></td>';
-    popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Editer</a></td></tr>';
-    popup += '<tr><td><a href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Sélection</a></td>';
-if (tabSelect.length>0)
-{
-  popup += '<td  colspan=2>&nbsp;&nbsp;&nbsp;<a href="" onclick="selection_save()">Enregistrer sélection</a></td>';
-}
-
-    popup += '</tr></table>';
-
-
-
-
-
-
-
-    //var icon = new L.TextIcon({ text: '<span class="numMarker numHeure_' + trancheHeure + '">' + (i + 1) + '</span>', color: color });
-
-
-    instanceclass='';
-    var icon = L.divIcon({
-      iconSize:null,
-      html:'<div class="map-label bord_'+color+' numHeure_' + trancheHeure + '"><div class="map-label-content">' + (i + 1) + '</div><div class="map-label-arrow"></div></div>'
-    });
-
-    try {
-
-      /*
-      panneaux[i].marker = L.marker([coord[0], coord[1]], { icon: icon }).addTo(map).bindPopup(popup);
-      markers.push(panneaux[i].marker);
-      */
-      markers.push(L.marker([coord[0], coord[1]], { icon: icon }).addTo(map).bindPopup(popup));
-
-    } catch (error) {
-      console.log('erreur : ' + popup);
-    }
-
-  }
-
-  
-  //alert(nbTrue+'\n'+nbFalse);
-
-
-
-
-  if (posStart != null) {
-    instanceclass='';
-    var icon = L.divIcon({
-      iconSize:null,
-      html:'<div class="map-label '+instanceclass+'"><div class="map-label-content">Départ</div><div class="map-label-arrow"></div></div>'
-    });
-    //posStart.marker = ;
-    markersPos.push(L.marker([posStart.lat, posStart.lng], { icon: icon }).addTo(map));
-
-  }
-  if (posStop != null) {
-    instanceclass='';
-    var icon = L.divIcon({
-      iconSize:null,
-      html:'<div class="map-label '+instanceclass+'"><div class="map-label-content">Arrivée</div><div class="map-label-arrow"></div></div>'
-    });
-    //posStop.marker = ;
-    markersPos.push(L.marker([posStop.lat, posStop.lng], { icon: icon }).addTo(map));
-
-  }
-  mapLoaded = true;
-}
   initIti();
- 
+
+}
+function cancelIti() {
+  if (confirm("êtes vous sur de vouloir sortir de cet itinéraire ?") == true) {
+  
+    send('cancel_iti', null, cancelIti_done, cancelIti_done)
+    return false;
+  }
+}
+function cancelIti_done() {
+  document.location.reload();
+
 }
 
 function initIti() {
-  
-  
-  sHtml="";
+
+
+  sHtml = "";
 
 
   for (var i = 0; i < panneaux.length; i++) {
-    
+
     var coord = panneaux[i]['coord'].replace(' ', '').split(",");
     var icon = greenIcon;
     var officiel = (panneaux[i]['officiel'] == 'TRUE') ? 'Officiel' : 'Libre';
     //var nom = panneaux[i]["nom_aff"];
     var nom = panneaux[i]["ville"];
-var nom = panneaux[i]["nom_aff"]+'<br>'+panneaux[i]["ville"]+'<br>'+panneaux[i]["last"]+' h='+ panneaux[i]["heures"];
+    
     var popup = nom + ' ' + officiel;
     var statut = panneaux[i]['statut_iti'];
     var heures = panneaux[i]['heures'];
 
     var trancheHeure = 0;
+    txtTranche='moins de 8h';
     if (heures > 8) {
       trancheHeure = 1;
+      txtTranche='moins de 16h';
     }
     if (heures > 16) {
       trancheHeure = 2;
+      txtTranche='moins de 24h';
     }
     if (heures > 24) {
       trancheHeure = 3;
+      txtTranche='plus de 24h';
     }
 
-    var addClassList="";
+    var nom = panneaux[i]["nom_aff"] + '<br>' + panneaux[i]["ville"] +' N°' + panneaux[i]['id']+ '<br>Dernier collage '+txtTranche;
+
+    var addClassList = "";
     if (statut == 0) {
       color = 'grey';
-      addClassList='list_todo';
+      addClassList = 'list_todo';
 
     }
     if (statut == 1) {
       color = 'green';
-      addClassList='list_done';
+      addClassList = 'list_done';
     }
-    if (i==curIdx+1)
-    {
-      addClassList='list_current';
+    if (i == curIdx + 1) {
+      addClassList = 'list_current';
     }
 
 
 
-    
-    sHtml+="<div class='"+addClassList+"'><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>&nbsp;&nbsp;&nbsp;";
- 
-     sHtml += '&nbsp;&nbsp;&nbsp;<a href="" onclick="checkPanneau(' + i + ',' + panneaux[i]['id'] + ',1)">Fait</a>&nbsp;&nbsp;&nbsp;';
-    
-    sHtml+=(i+1)+' : '+nom.replace(/ /gi, '&nbsp;')+' N°'+panneaux[i]['id']+' '+panneaux[i]['heures']+'h)';
-    sHtml+='</div>';
+
+    sHtml += "<div class='" + addClassList + "'>";
+
+    sHtml += "n°:"+(i + 1) + ' : ' + nom.replace(/ /gi, '&nbsp;') ;
+    //sHtml += ' N°' + panneaux[i]['id'] + ' ' + panneaux[i]['heures'] + 'h)';
+
+    sHtml +="<br/><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>&nbsp;&nbsp;&nbsp;";
+
+    sHtml += '&nbsp;&nbsp;&nbsp;<a href="" onclick="checkPanneau(' + i + ',' + panneaux[i]['id'] + ',1)">Fait</a>&nbsp;&nbsp;&nbsp;';
+    sHtml += '&nbsp;&nbsp;&nbsp;<a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',1)">Edit</a>&nbsp;&nbsp;&nbsp;';
 
     
+    sHtml += '</div>';
+
+
 
 
 
 
   }
 
-  $('#table_iti')[0].innerHTML=sHtml;
+  $('#table_iti')[0].innerHTML = sHtml;
   //alert(nbTrue+'\n'+nbFalse);
 
 
-  
+
 }
 
 
@@ -400,7 +430,7 @@ function clickVille() {
 }
 
 function getCheckedVille() {
-  curIdx=-1;
+  curIdx = -1;
   for (x in ville) {
     if (document.getElementById('ville_' + x).checked)
       ville[x] = true;
@@ -418,26 +448,26 @@ function listPanneau() {
   send('liste_panneau', 'choix', listPanneau_after, listPanneau_after)
 }
 function listPanneau_after(response) {
-  
+
   panneaux = response.data;
 
   try {
-    route= JSON.parse(  response.route);  
-    
-    $('#infoNb')[0].innerHTML='Nb : '+panneaux.length;
-    $('#infoDuree')[0].innerHTML='Temps : '+ Math.round( route.duration/100)+' mn';
-    $('#infoDistance')[0].innerHTML='Dist : '+Math.round( route.distance/1000)+ 'km';
-    $('#libIti')[0].innerHTML='Itinéraire ('+panneaux.length+')';
+    route = JSON.parse(response.route);
+
+    $('#infoNb')[0].innerHTML = 'Nb : ' + panneaux.length;
+    $('#infoDuree')[0].innerHTML = 'Temps : ' + Math.round(route.duration / 100) + ' mn';
+    $('#infoDistance')[0].innerHTML = 'Dist : ' + Math.round(route.distance / 1000) + 'km';
+    $('#libIti')[0].innerHTML = 'Itinéraire (' + panneaux.length + ')';
 
 
 
   } catch (error) {
-    $('#infoNb')[0].innerHTML='Nb : '+panneaux.length;
-    $('#infoDuree')[0].innerHTML='Temps : ?? mn';
-    $('#infoDistance')[0].innerHTML='Dist : ?? km';
-    $('#libIti')[0].innerHTML='Itinéraire ('+panneaux.length+')';
+    $('#infoNb')[0].innerHTML = 'Nb : ' + panneaux.length;
+    $('#infoDuree')[0].innerHTML = 'Temps : ?? mn';
+    $('#infoDistance')[0].innerHTML = 'Dist : ?? km';
+    $('#libIti')[0].innerHTML = 'Itinéraire (' + panneaux.length + ')';
   }
-  
+
 
   initIti();
 
@@ -447,7 +477,7 @@ function listPanneau_after(response) {
 
 function send(action, src, onSuccess, onError, tabData) {
 
-  
+
   curSuccsess = onSuccess;
   curError = onError;
   curAction = action;
@@ -506,7 +536,7 @@ function send(action, src, onSuccess, onError, tabData) {
   }
 
   f.idActeur = document.location.href.split('idActeur=')[1];
-  
+
 
 
   var toSend = { action: action, form: f };
@@ -572,8 +602,9 @@ function setStartStop_after() {
 
 
 function setItitneraireFromHere() {
-  $("#table_iti")[0].innerHTML="<div class='message'>en cours de calcul</div>";
-  bLocating=true;
+
+  $("#table_iti")[0].innerHTML = "<div class='message'>en cours de calcul</div>";
+  bLocating = true;
   var pos = navigator.geolocation.getCurrentPosition(setItitneraireFromHere_after, setItitneraireFromHere_error);
 
 
@@ -589,14 +620,15 @@ function setItitneraireFromHere() {
 
 function setItitneraireFromHere_after(pos) {
 
-  bLocating=false;
+  bLocating = false;
   calcItineraire({ lat: pos.coords.latitude, lng: pos.coords.longitude }, { lat: pos.coords.latitude, lng: pos.coords.longitude });
 }
 
 
 function setItitneraireToEnd() {
-  $("#table_iti")[0].innerHTML="<div class='message'>en cours de calcul</div>";
-  bLocating=true;
+
+  $("#table_iti")[0].innerHTML = "<div class='message'>en cours de calcul</div>";
+  bLocating = true;
   var pos = navigator.geolocation.getCurrentPosition(setItitneraireToEnd_after, setItitneraireFromHere_error);
 
 
@@ -612,7 +644,7 @@ function setItitneraireToEnd() {
 
 function setItitneraireToEnd_after(pos) {
 
-  bLocating=false;
+  bLocating = false;
   calcItineraire({ lat: pos.coords.latitude, lng: pos.coords.longitude }, posStop);
 }
 
@@ -620,20 +652,21 @@ function setItitneraireToEnd_after(pos) {
 
 
 function setItitneraireFromHere_error(err) {
-  bLocating=false;
+  bLocating = false;
   alert(err.message);
 
 }
 
 
 function setItitneraire() {
-  $("#table_iti")[0].innerHTML="<div class='message'>en cours de calcul</div>";
+  $("#table_iti")[0].innerHTML = "<div class='message'>en cours de calcul</div>";
   calcItineraire(posStart, posStop);
 
 }
 
 
 function calcItineraire(start, stop) {
+  hideChoix(true);
   var tab = [];
   for (var i = 0; i < panneaux.length; i++) {
     tab.push({ id: panneaux[i]['id'], coord: panneaux[i]['coord'] });
@@ -645,31 +678,29 @@ function calcItineraire(start, stop) {
 
 
 function setItitneraire_after(response) {
-  curIdx=-1;
+  curIdx = -1;
   listPanneau_after(response);
   initMap();
 }
 
-function checkPanneau(idx, idPanneau,go) {
-  if (!$("#cItiInverse")[0].checked)
-  {
+function checkPanneau(idx, idPanneau, go) {
+  if (!$("#cItiInverse")[0].checked) {
     curIdx = idx;
   }
-  else
-  {
-    curIdx = idx-2;
+  else {
+    curIdx = idx - 2;
   }
-  
-  this.go=go;
+
+  this.go = go;
   send('checkPanneau', null, checkPanneau_after, checkPanneau_after, { idPanneau: idPanneau })
   return true;
 }
 
 
-function uncheckPanneau(idx, idPanneau,go) {
+function uncheckPanneau(idx, idPanneau, go) {
 
   curIdx = idx;
-  this.go=go;
+  this.go = go;
   send('uncheckPanneau', null, checkPanneau_after, checkPanneau_after, { idPanneau: idPanneau })
   return true;
 }
@@ -681,45 +712,43 @@ function checkPanneau_after(response) {
   initMap();
 
 
-  
-    if (curIdx < markers.length - 1) {
-      markers[curIdx + 1].openPopup();
-  
-      if (this.go==1)
-      {
-        var coord = panneaux[curIdx + 1]['coord'].replace(' ', '').split(",");
-        window.open("https://www.google.com/maps/dir//" + coord[0] + "," + coord[1]);
-      }
+
+  if (curIdx < markers.length - 1) {
+    markers[curIdx + 1].openPopup();
+
+    if (this.go == 1) {
+      var coord = panneaux[curIdx + 1]['coord'].replace(' ', '').split(",");
+      window.open("https://www.google.com/maps/dir//" + coord[0] + "," + coord[1]);
     }
-  
-  
+  }
 
-  
 
- 
+
+
+
+
 
 
 };
 
-function ajusterPanneau(idx, idPanneau,go)
-{
-  
+function ajusterPanneau(idx, idPanneau, go) {
+
   if (confirm("êtes vous sur de voloir ajuster la position de ce panneau ?") == true) {
     curIdx = idx;
-    this.go=0;
-    bLocating=true;
+    this.go = 0;
+    bLocating = true;
     var pos = navigator.geolocation.getCurrentPosition(ajusterPanneau_after, setItitneraireFromHere_error);
-  } 
+  }
 
 
-  
+
 }
-function ajusterPanneau_after(pos){
-  
-  bLocating=false;
-  var coord=pos.coords.latitude+',' +pos.coords.longitude;
-  var idPanneau=panneaux[curIdx]['id'];
-  send('ajusterPanneau', null, ajusterPanneau_after2, ajusterPanneau_after2, { idPanneau: idPanneau,coord:coord })
+function ajusterPanneau_after(pos) {
+
+  bLocating = false;
+  var coord = pos.coords.latitude + ',' + pos.coords.longitude;
+  var idPanneau = panneaux[curIdx]['id'];
+  send('ajusterPanneau', null, ajusterPanneau_after2, ajusterPanneau_after2, { idPanneau: idPanneau, coord: coord })
 }
 
 
@@ -731,27 +760,30 @@ function ajusterPanneau_after2(response) {
 
 function newPanneau() {
   if (curPos != null) {
+
+    $('#titreNewPanneau')[0].innerHTML = "Nouveau panneau";
     $('#newPanneauId')[0].value = -1;
-    $('#newPanneauNom')[0].value ='';
-    $('#newPanneauCoord')[0].value =curPos.lat + ',' + curPos.lng;
-    
-    $('#newPanneauOfficiel').attr("checked",false).checkboxradio("refresh");
+    $('#newPanneauNom')[0].value = '';
+    $('#newPanneauCoord')[0].value = curPos.lat + ',' + curPos.lng;
 
-    el=$('#newPanneauVille');
-  el.val(0).attr('selected', true).siblings('option').removeAttr('selected');
+    $('#newPanneauOfficiel').attr("checked", false).checkboxradio("refresh");
+    $('#newPanneauPresent').attr("checked", true).checkboxradio("refresh");
 
-// Initialize the selectmenu
-el.selectmenu();
+    el = $('#newPanneauVille');
+    el.val(0).attr('selected', true).siblings('option').removeAttr('selected');
 
-// jQM refresh
-el.selectmenu("refresh", true);
-    
-  
-  
-    
-    let popup=$('#newPanneau')[0];
-  popup.style.display='';
-    
+    // Initialize the selectmenu
+    el.selectmenu();
+
+    // jQM refresh
+    el.selectmenu("refresh", true);
+
+
+
+
+    let popup = $('#newPanneau')[0];
+    popup.style.display = '';
+
   }
   else {
     alert('Position inconnue');
@@ -761,29 +793,27 @@ el.selectmenu("refresh", true);
 }
 
 function newPanneau_cancel() {
-  let popup=$('#newPanneau')[0];
-  popup.style.display='none';
+  let popup = $('#newPanneau')[0];
+  popup.style.display = 'none';
 }
-function newPanneau_valid()
-{
-  var nom=$('#newPanneauNom')[0].value;
+function newPanneau_valid() {
+  var nom = $('#newPanneauNom')[0].value;
 
-  if (nom!=''){
+  if (nom != '') {
 
-  
-  var id=$('#newPanneauId')[0].value;
-  
-  
-  var coord=$('#newPanneauCoord')[0].value;
-  var id_ville=$('#newPanneauVille')[0].value;
-  var officiel=$('#newPanneauOfficiel')[0].checked;
-  
-  
-  
-  send('newPanneau', null, newPanneau_after, newPanneau_after, {id:id, coord: coord,nom:nom,id_ville:id_ville,officiel:officiel })
+
+    var id = $('#newPanneauId')[0].value;
+
+
+    var coord = $('#newPanneauCoord')[0].value;
+    var id_ville = $('#newPanneauVille')[0].value;
+    var officiel = $('#newPanneauOfficiel')[0].checked;
+
+
+
+    send('newPanneau', null, newPanneau_after, newPanneau_after, { id: id, coord: coord, nom: nom, id_ville: id_ville, officiel: officiel })
   }
-  else
-  {
+  else {
     alert('Nom du panneau obligatoire');
   }
   newPanneau_cancel();
@@ -800,60 +830,61 @@ function newPanneau_after(response) {
 function newPanneau_after_done(response) {
   initIti();
   initMap();
-  
+
 
 }
 
-function selection_panneau(idx){
-  
+function selection_panneau(idx) {
 
-  let panneau=panneaux[idx];
-  let pos=tabSelect.indexOf(panneaux[idx]['id']);
-  if (pos==-1){
+
+  let panneau = panneaux[idx];
+  let pos = tabSelect.indexOf(panneaux[idx]['id']);
+  if (pos == -1) {
     tabSelect.push(panneaux[idx]['id']);
   }
-  else
-  {
-    tabSelect.splice(pos,1);
+  else {
+    tabSelect.splice(pos, 1);
   }
 
-  
+
 
   initMap();
 }
 
-function selection_save(){
+function selection_save() {
   $('#newIti')[0].style.display = '';
-  $('#nomIti')[0].value='';
+  $('#nomIti')[0].value = '';
 }
 
-function newIti_valid(){
-  nom=$('#nomIti')[0].value;
-  if (nom!=''){
-    send('newIti', null, newIti_after, newIti_after,{nom:nom,lst:tabSelect.join(',')})
+function newIti_valid() {
+  nom = $('#nomIti')[0].value;
+  if (nom != '') {
+    send('newIti', null, newIti_after, newIti_after, { nom: nom, lst: tabSelect.join(',') })
   }
-  else
-  {
+  else {
     alert('Nom de l\'itinéraire obligatoire');
   }
-  
+
   newIti_cancel();
 }
-function newIti_cancel(){
+function newIti_cancel() {
   $('#newIti')[0].style.display = 'none';
 }
-function newIti_after(){
-  tabSelect=[];
+function newIti_after() {
+  tabSelect = [];
   initMap();
 
 }
 
 function edit_panneau(idx) {
-   curIdx = idx;
-   send('choix', null, edit_panneau_init, edit_panneau_init,{})
+  
+  curIdx = idx;
+  send('choix', null, edit_panneau_init, edit_panneau_init, {})
+  
 }
 
-function edit_panneau_init(response) {
+function edit_panneau_init(idx) {
+  $('#titreNewPanneau')[0].innerHTML = "Modifier un panneau";
   $('#newPanneau')[0].style.display = '';
   var panneau = panneaux[curIdx];
   $('#newPanneauId')[0].value = panneau['id'];
@@ -863,103 +894,97 @@ function edit_panneau_init(response) {
   $('#newPanneauVille')[0].value = panneau['id_ville'];
   //$('#newPanneauOfficiel')[0].checked = (panneau['officiel'] == 'TRUE') ? true : false;
   //$('#newPanneauVille').attr("value",panneau['id_ville']).checkboxradio("refresh");
-el=$('#newPanneauVille');
+  el = $('#newPanneauVille');
   el.val(panneau['id_ville']).attr('selected', true).siblings('option').removeAttr('selected');
 
-// Initialize the selectmenu
-el.selectmenu();
-
-// jQM refresh
-el.selectmenu("refresh", true);
-
-  
 
 
-  $('#newPanneauOfficiel').attr("checked",true).checkboxradio("refresh");
-  
-//
+  // Initialize the selectmenu
+  el.selectmenu();
+
+  // jQM refresh
+  el.selectmenu("refresh", true);
+
+
+
+
+  $('#newPanneauOfficiel').attr("checked", true).checkboxradio("refresh");
+  $('#newPanneauPresent').attr("checked", true).checkboxradio("refresh");
+
+  //
 }
 
-function switchAutoPan()
-{
-  bAutoPan=!bAutoPan;
+function switchAutoPan() {
+  bAutoPan = !bAutoPan;
 
- 
+
 }
-function autoPan()
-{
-  bAutoPan=$("#cAutoPan")[0].checked;
-  if ((bAutoPan)&&(!bLocating))
-  {
-    bLocating=true;
+function autoPan() {
+  bAutoPan = $("#cAutoPan")[0].checked;
+  if ((bAutoPan) && (!bLocating)) {
+    bLocating = true;
     navigator.geolocation.getCurrentPosition(autoPan_after, null);
   }
-  
+
 }
-function autoPan_after(pos)
-{
-    bLocating=false;
-    //map.setView(new L.LatLng(pos.coords.latitude, pos.coords.longitude), 13);
-    map.setView(new L.LatLng(pos.coords.latitude, pos.coords.longitude));
-    if (bAutoPan)
-    {
-      $('#aAutoPan')[0].innerHTML='Suivi activé';
-    }
-    else
-    {
-      $('#aAutoPan')[0].innerHTML='Suivi désactivé';
-    }
-    initMap();
-  
+function autoPan_after(pos) {
+  bLocating = false;
+  //map.setView(new L.LatLng(pos.coords.latitude, pos.coords.longitude), 13);
+  map.setView(new L.LatLng(pos.coords.latitude, pos.coords.longitude));
+  if (bAutoPan) {
+    $('#aAutoPan')[0].innerHTML = 'Suivi activé';
+  }
+  else {
+    $('#aAutoPan')[0].innerHTML = 'Suivi désactivé';
+  }
+  initMap();
+
 }
 
 
 
 function newVille() {
-  $('#nomVille')[0].value='';
-    $('#newVille')[0].value = -1;
-    let popup=$('#newVille')[0];
-    popup.style.display='';
-  
+  $('#nomVille')[0].value = '';
+  $('#newVille')[0].value = -1;
+  let popup = $('#newVille')[0];
+  popup.style.display = '';
+
 
 }
 
 function newVille_cancel() {
-  let popup=$('#newVille')[0];
-  popup.style.display='none';
+  let popup = $('#newVille')[0];
+  popup.style.display = 'none';
 }
 
-function newVille_valid()
-{
-  var nom=$('#nomVille')[0].value;
-  if (nom!=''){
-    
-    send('newVille', null, newVille_after, newVille_after, {nom:nom})
+function newVille_valid() {
+  var nom = $('#nomVille')[0].value;
+  if (nom != '') {
+
+    send('newVille', null, newVille_after, newVille_after, { nom: nom })
   }
-  else
-  {
+  else {
     alert('Nom de la ville obligatoire');
   }
   newVille_cancel();
-  
-  
-  
-  
+
+
+
+
 }
 
 function newVille_after(response) {
-  
-  
+
+
 
   $('#newPanneauVille').find('option').remove();
   $('#newPanneauVille').append("<option value='0'>Villes</option");
-  for (let i=0;i<response.data.length;i++)
-  {
-    ville=response.data[i];
-    $('#newPanneauVille').append("<option value='"+ville['id']+"'>"+ville['nom']+"</option");
+  for (let i = 0; i < response.data.length; i++) {
+    ville = response.data[i];
+    $('#newPanneauVille').append("<option value='" + ville['id'] + "'>" + ville['nom'] + "</option");
   }
 
-  
+
 
   $('#newPanneauVille').selectmenu('refresh', true);
 

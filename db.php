@@ -52,7 +52,26 @@ function circuits()
 function acteurs()
 {
 
-    return getRS("select *  from acteur order by nom");
+    $rs= getRS("select *  from acteur order by nom");
+    for($i=0;$i<count($rs);$i++)
+    {
+        $idActeur=$rs[$i]['id'];
+        $iti=itiActeur($idActeur);
+        $rs[$i]['nb']=$iti[0]['nb'];
+        $rs[$i]['done']=$iti[0]['done'];
+
+
+    }
+    
+
+    return $rs;
+    
+}
+
+function itiActeur($idActeur)
+{
+
+    return getRS("select sum(case when statut=1 then 1 else 0 end) as done,count(*) as nb from panneau_acteur where acteur_id=".$idActeur);
     
 }
 
@@ -117,7 +136,7 @@ function liste_panneau()
 
 
     global $idActeur;
-    getExecute("delete from panneau_acteur where acteur_id=".$idActeur);
+    cancel_iti();
 
 
     
@@ -133,9 +152,17 @@ function liste_panneau()
         
     }
 
-    getExecute("update acteur set route='' where id=".$idActeur);
+    
     return getListe();
     
+}
+
+function cancel_iti()
+{
+    global $idActeur;
+    getExecute("delete from panneau_acteur where acteur_id=".$idActeur);
+    getExecute("update acteur set route='' where id=".$idActeur);
+    return true;
 }
 
 
@@ -386,6 +413,7 @@ function newPanneau(){
     $nom= str_replace("'","''", $form['nom']);
     
     $officiel=$form['officiel']? 'TRUE':'FALSE';
+    $present=$form['present']? 1:0;
     $id_ville=$form['id_ville'];
     $coord=$form['coord'];
     
@@ -393,10 +421,10 @@ function newPanneau(){
 
     if ($id==-1)
     {
-        $sql="insert into panneau (adresse,nom,officiel,id_ville,coord) values ('".$nom."','".$nom."','".$officiel."',".$id_ville.",'".$coord."')";
+        $sql="insert into panneau (adresse,nom,officiel,id_ville,coord,statuscode) values ('".$nom."','".$nom."','".$officiel."',".$id_ville.",'".$coord.",".$present.")";
     }
     else{
-        $sql="update panneau set adresse='".$nom."',nom='".$nom."',officiel='".$officiel."',id_ville=".$id_ville.",coord='".$coord."' where id=".$id;
+        $sql="update panneau set adresse='".$nom."',nom='".$nom."',officiel='".$officiel."',id_ville=".$id_ville.",coord='".$coord."',statuscode=".$present." where id=".$id;
     }
   //  echo $sql;
     getExecute($sql);

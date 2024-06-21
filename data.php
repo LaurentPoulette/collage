@@ -56,13 +56,17 @@ if (isset($_POST['data'])) {
       $result = villes();
       break;
 
-      case 'newVille':
-        $result = newVille();
-        break;
+    case 'newVille':
+      $result = newVille();
+      break;
 
-        case 'newIti':
-          $result = newIti();
-          break;
+    case 'newIti':
+      $result = newIti();
+      break;
+
+    case 'cancel_iti':
+      $result = cancel_iti();
+      break;
   };
 
   echo json_encode($result);
