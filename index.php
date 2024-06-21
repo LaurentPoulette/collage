@@ -1,6 +1,8 @@
 <?php
 include_once 'data.php';
+
 $version = 13;
+
 
 
 if (!isset($_GET['idActeur'])) {
@@ -17,7 +19,14 @@ if (!isset($_GET['idActeur'])) {
             <?php
             $rs = acteurs();
             foreach ($rs as $acteur) {
-                echo '<tr><th><a href="?idActeur=' . $acteur['id'] . '">' . $acteur['nom'] . '</a><br/></th></tr>';
+                $nb = $acteur['nb'];
+                $done = $acteur['done'];
+                if ($nb > 0) {
+                    $iti = "( $done / $nb )";
+                } else {
+                    $iti = "";
+                }
+                echo '<tr><th><a href="?idActeur=' . $acteur['id'] . '">' . $acteur['nom'] . $iti . '</a><br/></th></tr>';
             }
             ?>
         </table>
@@ -27,6 +36,12 @@ if (!isset($_GET['idActeur'])) {
 <?php
     exit;
 }
+
+$idActeur = $_GET['idActeur'];
+$iti = itiActeur($idActeur);
+$isIti = ($iti[0]['nb'] != 0);
+
+echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
 ?>
 
 <!doctype html>
@@ -49,7 +64,7 @@ if (!isset($_GET['idActeur'])) {
     <link rel="stylesheet" href="leaflet/plugin/textIcon/leaflet-text-icon.css" />
 
     <link rel="stylesheet" href="rsc/css/collage.css?v=<?php echo $version ?>" />
-    <script src="collage.js?v=<?php echo uniqid() ?>"></script>
+    <script src="collage.js?v=<?php $version ?>"></script>
 
     <style>
         .ui-tabs {
@@ -215,16 +230,25 @@ if (!isset($_GET['idActeur'])) {
                             </td>
                         </tr>
                     </table>
+                    <button onclick="cancelIti()">Sortir de l'itinéraire en cours</button>
 
                     <div id="table_iti">
 
 
                     </div>
 
-                    <div>
-                        <input type="checkbox" name="cAutoPan" id="cAutoPan" /> <label for="cAutoPan">Suivi sur la carte</label>
-                        <input type="checkbox" name="cItiInverse" id="cItiInverse" /><label for="cItiInverse">après collage aller au précédant</label>
+                    <div class="ui-grid-a" style="display:none">
+                        <div class="ui-block-a">
+                            <input type="checkbox" name="cAutoPan" id="cAutoPan" check /> <label for="cAutoPan">Suivi&nbsp;sur&nbsp;la&nbsp;carte</label>
+                        </div>
+                        <div class="ui-block-b">
+                            <input type="checkbox" name="cItiInverse" id="cItiInverse" /><label for="cItiInverse">Sens&nbsp;inverse</label>
+                        </div>
+
                     </div>
+
+                    
+
 
 
                 </div>
@@ -236,10 +260,14 @@ if (!isset($_GET['idActeur'])) {
             </div>
         </div>
         <div id="newPanneau" class="newPanneau" style="display: none">
-
+            <h3 id="titreNewPanneau">Nouveau panneau</h3>
+                                <div style="display: none;">
             <input type="text" id="newPanneauId" placeholder="id" disabled /><br />
-            <input type="test" id="newPanneauNom" placeholder="Nom du panneau" /><br />
             <input type="text" id="newPanneauCoord" placeholder="Coordonnées" /><br />
+            </div>
+
+            <input type="text" id="newPanneauNom" placeholder="Nom du panneau" /><br />
+            
 
             <select id="newPanneauVille">
                 <option value="0">Ville</option>
@@ -251,13 +279,20 @@ if (!isset($_GET['idActeur'])) {
                 }
 
                 ?>
-            </select><br />
-            <input type="checkbox" name="newPanneauOfficiel" id="newPanneauOfficiel" /> <label for="newPanneauOfficiel">Officiel</label>
+            </select><button onclick="newVille()">Nouvelle ville</button><br />
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <input type="checkbox" name="newPanneauOfficiel" id="newPanneauOfficiel" /> <label for="newPanneauOfficiel">Officiel</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="checkbox" name="newPanneauPresent" id="newPanneauPresent" /> <label for="newPanneauPresent">Présent</label>
+                </div>
+            </div><br/><br/><br/><br/>
             <!--<input type="checkbox" id="newPanneauOfficiel" placeholder="Nom du panneau" /><br/>-->
-            <div class="ui-grid-b">
-                <div class="ui-block-a"> <button onclick="newVille()">Nouvelle ville</button></div>
-                <div class="ui-block-b"><button onclick="newPanneau_valid()">Valider</button></div>
-                <div class="ui-block-c"><button onclick="newPanneau_cancel()">Annuler</button></div>
+            <div class="ui-grid-a">
+
+                <div class="ui-block-a"><button onclick="newPanneau_valid()">Valider</button></div>
+                <div class="ui-block-b"><button onclick="newPanneau_cancel()">Annuler</button></div>
             </div>
 
         </div>
