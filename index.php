@@ -1,7 +1,8 @@
 <?php
 include_once 'data.php';
 
-$version = 13;
+
+$version = file_get_contents('build.txt');
 
 
 
