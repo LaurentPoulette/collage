@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="10" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">Zone</Data></Cell>
+    <Cell><Data ss:Type="String">Addresse</Data></Cell>
+    <Cell><Data ss:Type="String">Nom</Data></Cell>
+    <Cell><Data ss:Type="String">Nbaffiches</Data></Cell>
+    <Cell><Data ss:Type="String">DernierCollage</Data></Cell>
+    <Cell><Data ss:Type="String">decolle</Data></Cell>
+    <Cell><Data ss:Type="String">NomIti</Data></Cell>
+    <Cell><Data ss:Type="String">PosIti</Data></Cell>
+    <Cell><Data ss:Type="String">Coord</Data></Cell>
+    <Cell><Data ss:Type="String">Officiel</Data></Cell>
+    <Cell><Data ss:Type="String">c1</Data></Cell>
+    <Cell><Data ss:Type="String">c2</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Touvre</Data></Cell>
+    <Cell><Data ss:Type="String">Impasse de la Maillerie</Data></Cell>
+    <Cell><Data ss:Type="String">Maillerie</Data></Cell>
+    <Cell><Data ss:Type="String">1</Data></Cell>
+    <Cell><Data ss:Type="String">16/06/2022 15:29:16</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">45.663750, 0.251690</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String">45.663750</Data></Cell>
+    <Cell><Data ss:Type="String"> 0.251690</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Touvre</Data></Cell>
+    <Cell><Data ss:Type="String">Route de la SabliÃ¨re</Data></Cell>
+    <Cell><Data ss:Type="String">La SabliÃ¨re</Data></Cell>
+    <Cell><Data ss:Type="String">1</Data></Cell>
+    <Cell><Data ss:Type="String">15/06/2022 22:50:05</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">45.658465, 0.247809</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String">45.658465</Data></Cell>
+    <Cell><Data ss:Type="String"> 0.247809</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Touvre</Data></Cell>
+    <Cell><Data ss:Type="String">Beauregard</Data></Cell>
+    <Cell><Data ss:Type="String">Beauregard</Data></Cell>
+    <Cell><Data ss:Type="String">1</Data></Cell>
+    <Cell><Data ss:Type="String">15/06/2022 01:30:21</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">45.6668272, 0.2625494</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String">45.6668272</Data></Cell>
+    <Cell><Data ss:Type="String"> 0.2625494</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Touvre</Data></Cell>
+    <Cell><Data ss:Type="String">Rue des Varennes</Data></Cell>
+    <Cell><Data ss:Type="String">Les Varennes</Data></Cell>
+    <Cell><Data ss:Type="String">1</Data></Cell>
+    <Cell><Data ss:Type="String">15/06/2022 22:51:32</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">45.651394, 0.266119</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String">45.651394</Data></Cell>
+    <Cell><Data ss:Type="String"> 0.266119</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Touvre</Data></Cell>
+    <Cell><Data ss:Type="String">Fourville</Data></Cell>
+    <Cell><Data ss:Type="String">Fourville</Data></Cell>
+    <Cell><Data ss:Type="String">1</Data></Cell>
+    <Cell><Data ss:Type="String">16/06/2022 15:23:45</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">45.672317, 0.250258</Data></Cell>
+    <Cell><Data ss:Type="String">TRUE</Data></Cell>
+    <Cell><Data ss:Type="String">45.672317</Data></Cell>
+    <Cell><Data ss:Type="String"> 0.250258</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

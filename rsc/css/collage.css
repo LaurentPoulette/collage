@@ -1,0 +1,232 @@
+#map{
+    width:100%;
+    height: 100%;
+}
+
+.numMarker{
+    font-weight: bold;
+    
+}
+
+
+.leaflet-marker-icon .icon-text {
+	position: relative;
+	top: -42px;
+	font-size: 12px;
+	width: 25px;
+	text-align: center;
+	padding-top: 3px;
+}
+
+
+
+.numHeure_0{
+	color:green;
+}
+
+.numHeure_1{
+	color:orange;
+}
+
+.numHeure_2{
+	color:orange;
+}
+
+
+.numHeure_3{
+	color:red;
+}
+
+
+
+
+#table_iti{
+	border:2px solid white;
+}
+
+.list_todo{
+	margin-bottom: 5px;;
+	padding: 3px;
+	background-color: gray;
+	color:white;
+	text-decoration:	none;
+	text-shadow:none;
+	
+}
+
+.list_done{
+	padding: 3px;
+	background-color: green;
+	color:white;
+	text-decoration:	none;
+	text-shadow:none;
+	margin-bottom: 5px;
+}
+
+.list_current{
+	padding: 3px;
+	background-color: blue;
+	color:white;
+	text-decoration:	none;
+	text-shadow:none;
+	margin-bottom: 5px;
+	
+	
+}
+
+.list_todo td, .list_done td, .list_current td{
+	border:2px solid white
+	
+}
+.list_todo a, .list_done a, .list_current a{
+	color:white;
+	
+}
+.list_todo a:visited, .list_done a:visited, .list_current a:visited{
+	color:white;
+	
+}
+
+.message{
+	margin-top: 5em;;
+	color:blue;
+	font-size: 3em;
+	text-align: center;
+}
+
+.lstActeur{
+	
+	width:100%;
+	text-align: center;
+	font-size: 3em;;
+}
+
+.lstActeur a{
+
+	font-size: 2em;;
+}
+
+
+
+/******************/
+/*Wraperclass for the divicon*/
+.map-label {
+	position: absolute;
+	bottom: 0;left: -50%;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+  }
+  /*Wrap the content of the divicon (text) in this class*/
+  .map-label-content {
+	order: 1;
+	position: relative; left: -50%;
+	background-color: #fff;
+	border-radius: 5px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #444;
+	padding: 1px;
+	white-space: nowrap;
+	font-weight: bold;
+  }
+  /*Add this arrow*/
+  .map-label-arrow {
+	order: 2;
+	width: 0px; height: 0px; left: 50%;
+	border-style: solid;
+	border-color: #444 transparent transparent transparent;
+	border-width: 10px 6px 0 6px; /*[first number is height, second/fourth are rigth/left width]*/
+	margin-left: -6px;
+  }
+  
+  /*Instance classes*/
+  .map-label.inactive {
+	opacity: 0.5;
+  }
+  
+  .map-label.redborder > .map-label-content {
+	border-color: #e00;
+  }
+  .map-label.redborder > .map-label-arrow {
+	border-top-color: #e00;
+  }
+  
+  .map-label.redbackground > .map-label-content {
+	white-space: default;
+	color: #fff;
+	background-color: #e00;
+  }
+
+
+  .map-label.bord_red .map-label-content{
+	
+	border-color: red;
+	
+  }
+
+  .map-label.bord_red .map-label-arrow{
+	
+	border-top-color: red;
+	
+  }
+
+  .map-label.bord_blue .map-label-content{
+	
+	border-color: blue;
+	
+  }
+  .map-label.bord_blue .map-label-arrow{
+	
+	border-top-color: blue;
+	
+  }
+
+  .map-label.bord_green .map-label-content{
+	
+	border-color: green;
+	
+  }
+  .map-label.bord_green .map-label-arrow{
+	
+	border-top-color: green;
+	
+  }
+
+
+  .map-label.bord_selected .map-label-content{
+	
+	border-color: yellow;
+	background-color: yellow;
+	color:black;
+	font-weight: bolder;
+	
+  }
+  .map-label.bord_selected .map-label-arrow{
+	
+	border-top-color: yellow;
+	
+  }
+
+  .newPanneau{
+	padding: 1em;;
+	border: 1px solid black;
+	background-color: white;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 998;
+  }
+  .newVille{
+	padding: 1em;;
+	border: 1px solid black;
+	background-color: white;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+  }

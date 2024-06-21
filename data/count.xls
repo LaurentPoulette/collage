@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <LastAuthor>POULETTE, Laurent</LastAuthor>
+  <LastSaved>2023-01-08T10:28:42Z</LastSaved>
+  <Version>16.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>7845</WindowHeight>
+  <WindowWidth>21570</WindowWidth>
+  <WindowTopX>32767</WindowTopX>
+  <WindowTopY>32767</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Table1">
+  <Names>
+   <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Table1!R1C1:R24C3"
+    ss:Hidden="1"/>
+  </Names>
+  <Table ss:ExpandedColumnCount="12" ss:ExpandedRowCount="24" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="60" ss:DefaultRowHeight="15">
+   <Column ss:AutoFitWidth="0" ss:Width="110.25"/>
+   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="162"/>
+   <Row>
+    <Cell><Data ss:Type="String">nom</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">count(*)</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">iti</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Angoulême</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">29</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">1</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">29</Data></Cell>
+    <Cell><Data ss:Type="String">Off 1 Angouleme</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into circuit (nom) values ('&quot;,RC[-1],&quot;');&quot;)"><Data
+      ss:Type="String">insert into circuit (nom) values ('Off 1 Angouleme');</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="Number">10</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into panneau_circuit (id_panneau,id_circuit) select id,&quot;,RC[-2],&quot; from panneau where officiel='true' and id_ville in(&quot;,RC[-1],&quot;);&quot;)"><Data
+      ss:Type="String">insert into panneau_circuit (id_panneau,id_circuit) select id,10 from panneau where officiel='true' and id_ville in(1);</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">BALZAC</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">2</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">2</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">CHAMPNIERS</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">13</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">2</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">GOND-PONTOUVRE</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">11</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">2</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:Formula="=RC[-2]+R[-1]C[-2]+R[-2]C[-2]"><Data ss:Type="Number">26</Data></Cell>
+    <Cell><Data ss:Type="String">Off 2 Nord</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into circuit (nom) values ('&quot;,RC[-1],&quot;');&quot;)"><Data
+      ss:Type="String">insert into circuit (nom) values ('Off 2 Nord');</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="Number">11</Data></Cell>
+    <Cell><Data ss:Type="String">2,4,9</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into panneau_circuit (id_panneau,id_circuit) select id,&quot;,RC[-2],&quot; from panneau where officiel='true' and id_ville in(&quot;,RC[-1],&quot;);&quot;)"><Data
+      ss:Type="String">insert into panneau_circuit (id_panneau,id_circuit) select id,11 from panneau where officiel='true' and id_ville in(2,4,9);</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">La Couronne</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">12</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">3</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">NERSAC</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">10</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">3</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Roullet-Saint-Estèphe</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">3</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">3</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">SAINT-MICHEL</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">8</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">3</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:Formula="=RC[-2]+R[-1]C[-2]+R[-2]C[-2]+R[-3]C[-2]"><Data
+      ss:Type="Number">33</Data></Cell>
+    <Cell><Data ss:Type="String">Off 3 Sud est</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into circuit (nom) values ('&quot;,RC[-1],&quot;');&quot;)"><Data
+      ss:Type="String">insert into circuit (nom) values ('Off 3 Sud est');</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">11,14,16,18</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into panneau_circuit (id_panneau,id_circuit) select id,&quot;,RC[-2],&quot; from panneau where officiel='true' and id_ville in(&quot;,RC[-1],&quot;);&quot;)"><Data
+      ss:Type="String">insert into panneau_circuit (id_panneau,id_circuit) select id,12 from panneau where officiel='true' and id_ville in(11,14,16,18);</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">BOUEX</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">1</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Dignac</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">2</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Dirac</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">1</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">GARAT</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">1</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Sers</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">1</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Voeuil-Et-Giget</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">3</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Vouzan</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">1</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell
+     ss:Formula="=RC[-2]+R[-1]C[-2]+R[-2]C[-2]+R[-3]C[-2]+R[-4]C[-2]+R[-5]C[-2]+R[-6]C[-2]+R[-7]C[-2]"><Data
+      ss:Type="Number">18</Data></Cell>
+    <Cell><Data ss:Type="String">Off 4 Sud Ouest</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into circuit (nom) values ('&quot;,RC[-1],&quot;');&quot;)"><Data
+      ss:Type="String">insert into circuit (nom) values ('Off 4 Sud Ouest');</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="Number">13</Data></Cell>
+    <Cell><Data ss:Type="String">3,5,6,8,20,23,24</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into panneau_circuit (id_panneau,id_circuit) select id,&quot;,RC[-2],&quot; from panneau where officiel='true' and id_ville in(&quot;,RC[-1],&quot;);&quot;)"><Data
+      ss:Type="String">insert into panneau_circuit (id_panneau,id_circuit) select id,13 from panneau where officiel='true' and id_ville in(3,5,6,8,20,23,24);</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">L'isle D'espagnac</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">12</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">5</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MAGNAC SUR TOUVRE</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">6</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">5</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">MORNAC</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">5</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Ruelle sur Touvre</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">9</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">5</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:Formula="=RC[-2]+R[-1]C[-2]+R[-2]C[-2]+R[-3]C[-2]"><Data
+      ss:Type="Number">31</Data></Cell>
+    <Cell><Data ss:Type="String">Off 5 Nord Ouest</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into circuit (nom) values ('&quot;,RC[-1],&quot;');&quot;)"><Data
+      ss:Type="String">insert into circuit (nom) values ('Off 5 Nord Ouest');</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="Number">14</Data></Cell>
+    <Cell><Data ss:Type="String">10,12,13,17</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into panneau_circuit (id_panneau,id_circuit) select id,&quot;,RC[-2],&quot; from panneau where officiel='true' and id_ville in(&quot;,RC[-1],&quot;);&quot;)"><Data
+      ss:Type="String">insert into panneau_circuit (id_panneau,id_circuit) select id,14 from panneau where officiel='true' and id_ville in(10,12,13,17);</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PUYMOYEN</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">10</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">6</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Soyaux</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">11</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">6</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:Formula="=RC[-2]+R[-1]C[-2]"><Data ss:Type="Number">21</Data></Cell>
+    <Cell><Data ss:Type="String">Off 6 Soyaux/Puymoyen</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into circuit (nom) values ('&quot;,RC[-1],&quot;');&quot;)"><Data
+      ss:Type="String">insert into circuit (nom) values ('Off 6 Soyaux/Puymoyen');</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="Number">15</Data></Cell>
+    <Cell><Data ss:Type="Number">15.21</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into panneau_circuit (id_panneau,id_circuit) select id,&quot;,RC[-2],&quot; from panneau where officiel='true' and id_ville in(&quot;,RC[-1],&quot;);&quot;)"><Data
+      ss:Type="String">insert into panneau_circuit (id_panneau,id_circuit) select id,15 from panneau where officiel='true' and id_ville in(15,21);</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Fléac</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">8</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">7</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Saint-Yrieix-sur-Charente</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">8</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">7</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:Formula="=RC[-2]+R[-1]C[-2]"><Data ss:Type="Number">16</Data></Cell>
+    <Cell><Data ss:Type="String">Off 7 Est</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into circuit (nom) values ('&quot;,RC[-1],&quot;');&quot;)"><Data
+      ss:Type="String">insert into circuit (nom) values ('Off 7 Est');</Data></Cell>
+    <Cell ss:Index="10"><Data ss:Type="Number">16</Data></Cell>
+    <Cell><Data ss:Type="Number">7.19</Data></Cell>
+    <Cell
+     ss:Formula="=CONCATENATE(&quot;insert into panneau_circuit (id_panneau,id_circuit) select id,&quot;,RC[-2],&quot; from panneau where officiel='true' and id_ville in(&quot;,RC[-1],&quot;);&quot;)"><Data
+      ss:Type="String">insert into panneau_circuit (id_panneau,id_circuit) select id,16 from panneau where officiel='true' and id_ville in(7,19);</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.4921259845"/>
+    <Footer x:Margin="0.4921259845"/>
+    <PageMargins x:Bottom="0.984251969" x:Left="0.78740157499999996"
+     x:Right="0.78740157499999996" x:Top="0.984251969"/>
+   </PageSetup>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>0</VerticalResolution>
+   </Print>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveCol>11</ActiveCol>
+     <RangeSelection>C12</RangeSelection>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  <AutoFilter x:Range="R1C1:R24C3"
+   xmlns="urn:schemas-microsoft-com:office:excel">
+  </AutoFilter>
+ </Worksheet>
+</Workbook>
