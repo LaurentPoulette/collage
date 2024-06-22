@@ -143,6 +143,9 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
                                         <input type="radio" name="mode" id="mode_officiel" value="officiels">
                                         <label for="mode_officiel">Officiels</label>
                                     </fieldset>
+
+                        
+
                             <table data-role="table" id="table_ville" data-mode="reflow" class="ui-responsive table-stroke ui-table ui-table-reflow">
                                 <?php
                                 $tabVille = villes();
@@ -248,7 +251,7 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
 
                     </div>
 
-                    
+
 
 
 
@@ -262,13 +265,13 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
         </div>
         <div id="newPanneau" class="newPanneau" style="display: none">
             <h3 id="titreNewPanneau">Nouveau panneau</h3>
-                                <div style="display: none;">
-            <input type="text" id="newPanneauId" placeholder="id" disabled /><br />
-            <input type="text" id="newPanneauCoord" placeholder="Coordonnées" /><br />
+            <div style="display: none;">
+                <input type="text" id="newPanneauId" placeholder="id" disabled /><br />
+                <input type="text" id="newPanneauCoord" placeholder="Coordonnées" /><br />
             </div>
 
             <input type="text" id="newPanneauNom" placeholder="Nom du panneau" /><br />
-            
+
 
             <select id="newPanneauVille">
                 <option value="0">Ville</option>
@@ -288,7 +291,7 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
                 <div class="ui-block-b">
                     <input type="checkbox" name="newPanneauPresent" id="newPanneauPresent" /> <label for="newPanneauPresent">Présent</label>
                 </div>
-            </div><br/><br/><br/><br/>
+            </div><br /><br /><br /><br />
             <!--<input type="checkbox" id="newPanneauOfficiel" placeholder="Nom du panneau" /><br/>-->
             <div class="ui-grid-a">
 
