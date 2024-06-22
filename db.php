@@ -421,7 +421,7 @@ function newPanneau(){
 
     if ($id==-1)
     {
-        $sql="insert into panneau (adresse,nom,officiel,id_ville,coord,statuscode) values ('".$nom."','".$nom."','".$officiel."',".$id_ville.",'".$coord.",".$present.")";
+        $sql="insert into panneau (adresse,nom,officiel,id_ville,coord,statuscode) values ('".$nom."','".$nom."','".$officiel."',".$id_ville.",'".$coord."',".$present.")";
     }
     else{
         $sql="update panneau set adresse='".$nom."',nom='".$nom."',officiel='".$officiel."',id_ville=".$id_ville.",coord='".$coord."',statuscode=".$present." where id=".$id;
