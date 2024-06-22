@@ -798,6 +798,7 @@ function newPanneau_cancel() {
 }
 function newPanneau_valid() {
   var nom = $('#newPanneauNom')[0].value;
+  var id_ville = $('#newPanneauVille')[0].value;
 
   if (nom != '') {
 
@@ -806,19 +807,20 @@ function newPanneau_valid() {
 
 
     var coord = $('#newPanneauCoord')[0].value;
-    var id_ville = $('#newPanneauVille')[0].value;
+   
     var officiel = $('#newPanneauOfficiel')[0].checked;
-    var present = $('#newPanneauOfficiel')[0].checked;
+    var present = $('#newPanneauPresent')[0].checked;
     
 
 
 
     send('newPanneau', null, newPanneau_after, newPanneau_after, { id: id, coord: coord, nom: nom, id_ville: id_ville, officiel: officiel,present: present})
+    newPanneau_cancel();
   }
   else {
     alert('Nom du panneau obligatoire');
   }
-  newPanneau_cancel();
+  
 }
 
 function newPanneau_after(response) {
