@@ -800,7 +800,7 @@ function newPanneau_valid() {
   var nom = $('#newPanneauNom')[0].value;
   var id_ville = $('#newPanneauVille')[0].value;
 
-  if (nom != '') {
+  if ((nom != '')&&(id_ville!="0")) {
 
 
     var id = $('#newPanneauId')[0].value;
@@ -818,7 +818,7 @@ function newPanneau_valid() {
     newPanneau_cancel();
   }
   else {
-    alert('Nom du panneau obligatoire');
+    alert('Nom du panneau obligatoire\nVille obligatoire');
   }
   
 }
