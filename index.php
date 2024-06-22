@@ -167,7 +167,7 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
                                             <td>
 
                                                 <label>
-                                                    <input type="checkbox" name="ville_<?php echo $row['id']; ?>" id="ville_<?php echo $row['id']; ?>" /><?php echo $row['nom'] ?>
+                                                    <input type="checkbox" name="ville_<?php echo $row['id']; ?>" id="ville_<?php echo $row['id']; ?>" /><?php echo $row['nom'].' ==> L=' . $row['libre'] .' , O=' . $row['officiel']  ?>
                                                 </label>
 
 
@@ -192,7 +192,7 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
                                         <td>
 
                                             <label>
-                                                <input type="checkbox" name="circuit_<?php echo $row['id']; ?>" id="circuit_<?php echo $row['id']; ?>" /><?php echo $row['nom'] ?>
+                                                <input type="checkbox" name="circuit_<?php echo $row['id']; ?>" id="circuit_<?php echo $row['id']; ?>" /><?php echo $row['nom'] .' ==> L=' . $row['libre'] .' , O=' . $row['officiel']?>
 
                                             </label>
 
@@ -279,7 +279,7 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
 
                 $tabVille = villes();
                 foreach ($tabVille as $row) {
-                    echo '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
+                    echo '<option value="' . $row['id'] . '">' . $row['nom'] .')</option>';
                 }
 
                 ?>

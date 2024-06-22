@@ -37,7 +37,16 @@ function users()
 function villes()
 {
 
-    return getRS("select id,nom  from ville order by nom");
+//    return getRS("select id,nom  from ville order by nom");
+
+$sql="
+    select v.id,
+v.nom,
+ (select count(*) from panneau where id_ville=v.id and statuscode=1 and officiel='TRUE') as officiel,
+ (select count(*) from panneau where id_ville=v.id and statuscode=1 and officiel='FALSE')  as libre
+from ville v order by v.nom";
+return getRS($sql);
+
     
 }
 
@@ -45,8 +54,16 @@ function villes()
 function circuits()
 {
 
-    return getRS("select id,nom  from circuit order by nom");
     
+    $sql="
+    select v.id,v.nom,
+
+ (select count(*) from panneau_circuit c join panneau p on p.id=c.id_panneau  where id_circuit=v.id and p.statuscode=1 and officiel='TRUE') as officiel,
+ (select count(*) from panneau_circuit c join panneau p on p.id=c.id_panneau  where id_circuit=v.id and p.statuscode=1 and officiel='FASLE') as libre
+
+from circuit v order by v.nom
+    ";
+    return getRS($sql);
 }
 
 function acteurs()
