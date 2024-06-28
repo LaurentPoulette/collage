@@ -193,31 +193,9 @@ function initMap() {
       var statut = panneaux[i]['statut_iti'];
       var heures = panneaux[i]['heures'];
 
-      var trancheHeure = 0;
 
 
-      if (officiel == 'Officiel') {
-        if (heures > 48) {
-          trancheHeure = 1;
-        }
-        if (heures > 72) {
-          trancheHeure = 2;
-        }
-        if (heures > 96) {
-          trancheHeure = 3;
-        }
-      }
-      else {
-        if (heures > 8) {
-          trancheHeure = 1;
-        }
-        if (heures > 24) {
-          trancheHeure = 2;
-        }
-        if (heures > 48) {
-          trancheHeure = 3;
-        }
-      }
+      var trancheHeure = getFraicheur(i);
 
       if (panneaux[i]["heures"].search('2023') != -1) {
         trancheHeure = 3;
@@ -238,8 +216,7 @@ function initMap() {
           color = 'blue';
           addClassList = 'list_current';
         }
-      else
-        {
+        else {
           curIdx = curIdx + 1;
         }
       }
@@ -253,18 +230,19 @@ function initMap() {
 
 
       popup = "<table>";
-      popup += "<tr><td colspan=4>" + panneaux[i]['id'] + '&nbsp;:&nbsp;' + nom.replace(/ /gi, '&nbsp;') + '&nbsp;(' + officiel + ')' + "</td></tr>";
-      popup += "<tr><td ><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>&nbsp;&nbsp;&nbsp;</td>";
-      popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="checkPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Fait</a>&nbsp;&nbsp;&nbsp;</td>';
-      popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="uncheckPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">KO</a>&nbsp;&nbsp;&nbsp;</td></tr>';
-      popup += '<tr><td ><a href="" onclick="ajusterPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Ajuster&nbsp;position</a></td>';
-      popup += '<td >&nbsp;&nbsp;&nbsp;<a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Editer</a></td></tr>';
-      popup += '<tr><td><a href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Sélection</a></td>';
+      popup += "<tr><td colspan=3>" +  getNom(i) + "</td></tr>";
+      popup += "<tr><td style='text-align:left'><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>";
+      popup += '<br/><br/><a href="" onclick="checkPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Fait</a>';
+      popup += '<br/><br/><a href="" onclick="uncheckPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">KO</a</td>';
+      popup+="<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+      popup += '<td  style="text-align:right"><a href="" onclick="ajusterPanneau(' + i + ',' + panneaux[i]['id'] + ',0)">Ajuster</a>';
+      popup += '<br/><br/><a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Editer</a>';
+      popup += '<br/><br/><a href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Sélection</a>';
       if (tabSelect.length > 0) {
-        popup += '<td  colspan=2>&nbsp;&nbsp;&nbsp;<a href="" onclick="selection_save()">Enregistrer sélection</a></td>';
+        popup += '<br/>&nbsp;&nbsp;&nbsp;<a href="" onclick="selection_save()">Enregistrer sélection</a>';
       }
 
-      popup += '</tr></table>';
+      popup += '</td></tr></table>';
 
 
 
@@ -328,13 +306,89 @@ function initMap() {
 }
 function cancelIti() {
   if (confirm("êtes vous sur de vouloir sortir de cet itinéraire ?") == true) {
-  
+
     send('cancel_iti', null, cancelIti_done, cancelIti_done)
     return false;
   }
 }
 function cancelIti_done() {
   document.location.reload();
+
+}
+
+var tabTrancheLibre =
+  [, ,
+    , '<span class="fraicheur_3">plus de 24h</span>', '<span class="fraicheur_4">plus de 48h</span>'];
+
+function getFraicheur(idx,bLib) {
+  var trancheHeure = 0;
+  var heures = panneaux[idx]['heures'] ?? 100;
+  heures = parseInt(heures);
+  var officiel = (panneaux[idx]['officiel'] == 'TRUE') ? 'Officiel' : 'Libre';
+
+
+  var trancheHeure = 0;
+  let txt='';
+
+
+  if (officiel == 'Officiel') {
+    txt='<span class="fraicheur_0">moins de 2 jours</span>';
+    if (heures > 48) {
+      trancheHeure = 1;
+      txt='<span class="fraicheur_1">moins de 3 jours</span>';
+      
+    }
+    if (heures > 72) {
+      trancheHeure = 2;
+      txt='<span class="fraicheur_2">moins de 4 jours</span>';
+    }
+    if (heures > 96) {
+      trancheHeure = 3;
+      txt='<span class="fraicheur_3">plus de 4 jours</span>';
+    }
+  }
+  else {
+
+     txt='<span class="fraicheur_0">moins de 8h</span>';
+
+    if (heures > 8) {
+      trancheHeure = 1;
+      txt='<span class="fraicheur_1">moins de 16h</span>';
+
+    }
+    if (heures > 16) {
+      trancheHeure = 2;
+      txt= '<span class="fraicheur_2">moins de 24h</span>';
+
+    }
+    if (heures > 24) {
+      trancheHeure = 3;
+      txt='<span class="fraicheur_3">plus de 24h</span>';
+
+    }
+    if (heures > 48) {
+      trancheHeure = 4;
+      txt='<span class="fraicheur_4">plus de 48h</span>';
+
+    }
+  }
+
+ if (bLib)
+ return txt;
+ else
+  
+  return trancheHeure;
+
+}
+function getNom(idx) {
+
+  var officiel = (panneaux[idx]['officiel'] == 'TRUE') ? 'Officiel' : 'Libre';
+  let nom = (idx + 1) + ' : <span class="'+officiel+'">'+(panneaux[idx]['officiel'] == 'TRUE' ? 'Officiel' : 'Libre')+'</span>'+getFraicheur(idx,true)+'<br/>' + panneaux[idx]['ville'] + ' ' +  ' (' + panneaux[idx]['id'] + ') ' ;
+
+  nom += '<br/>' + panneaux[idx]['nom_aff'] + ' ';
+
+  //return nom.replace(/ /gi, '&nbsp;') ;
+  return nom;
 
 }
 
@@ -351,27 +405,14 @@ function initIti() {
     var officiel = (panneaux[i]['officiel'] == 'TRUE') ? 'Officiel' : 'Libre';
     //var nom = panneaux[i]["nom_aff"];
     var nom = panneaux[i]["ville"];
-    
+
     var popup = nom + ' ' + officiel;
     var statut = panneaux[i]['statut_iti'];
     var heures = panneaux[i]['heures'];
 
-    var trancheHeure = 0;
-    txtTranche='moins de 8h';
-    if (heures > 8) {
-      trancheHeure = 1;
-      txtTranche='moins de 16h';
-    }
-    if (heures > 16) {
-      trancheHeure = 2;
-      txtTranche='moins de 24h';
-    }
-    if (heures > 24) {
-      trancheHeure = 3;
-      txtTranche='plus de 24h';
-    }
 
-    var nom = panneaux[i]["nom_aff"] + '<br>' + panneaux[i]["ville"] +' N°' + panneaux[i]['id']+ '<br>Dernier collage '+txtTranche;
+
+    //var nom = panneaux[i]["nom_aff"] + '<br>' + panneaux[i]["ville"] +' N°' + panneaux[i]['id']+ '<br>Dernier collage '+txtTranche;
 
     var addClassList = "";
     if (statut == 0) {
@@ -392,15 +433,30 @@ function initIti() {
 
     sHtml += "<div class='" + addClassList + "'>";
 
-    sHtml += "n°:"+(i + 1) + ' : ' + nom.replace(/ /gi, '&nbsp;') ;
+    sHtml += getNom(i);
     //sHtml += ' N°' + panneaux[i]['id'] + ' ' + panneaux[i]['heures'] + 'h)';
 
-    sHtml +="<br/><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>&nbsp;&nbsp;&nbsp;";
+    sHtml += "<br/><a target='_blank' href='https://www.google.com/maps/dir//" + coord[0] + "," + coord[1] + "'>Y&nbsp;aller</a>&nbsp;&nbsp;&nbsp;";
+
 
     sHtml += '&nbsp;&nbsp;&nbsp;<a href="" onclick="checkPanneau(' + i + ',' + panneaux[i]['id'] + ',1)">Fait</a>&nbsp;&nbsp;&nbsp;';
     sHtml += '&nbsp;&nbsp;&nbsp;<a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',1)">Edit</a>&nbsp;&nbsp;&nbsp;';
 
-    
+
+    let pos = tabSelect.indexOf(panneaux[i]['id']);
+    if (pos == -1) {
+      sHtml += '&nbsp;&nbsp;&nbsp;<a id="selection_' + i + '" href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',1)">Sélection</a>&nbsp;&nbsp;&nbsp;';
+
+    }
+    else {
+      sHtml += '&nbsp;&nbsp;&nbsp;<a id="selection_' + i + '" href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',1)">Désélection</a>&nbsp;&nbsp;&nbsp;';
+
+    }
+
+
+
+
+
     sHtml += '</div>';
 
 
@@ -800,27 +856,27 @@ function newPanneau_valid() {
   var nom = $('#newPanneauNom')[0].value;
   var id_ville = $('#newPanneauVille')[0].value;
 
-  if ((nom != '')&&(id_ville!="0")) {
+  if ((nom != '') && (id_ville != "0")) {
 
 
     var id = $('#newPanneauId')[0].value;
 
 
     var coord = $('#newPanneauCoord')[0].value;
-   
+
     var officiel = $('#newPanneauOfficiel')[0].checked;
     var present = $('#newPanneauPresent')[0].checked;
-    
 
 
 
-    send('newPanneau', null, newPanneau_after, newPanneau_after, { id: id, coord: coord, nom: nom, id_ville: id_ville, officiel: officiel,present: present})
+
+    send('newPanneau', null, newPanneau_after, newPanneau_after, { id: id, coord: coord, nom: nom, id_ville: id_ville, officiel: officiel, present: present })
     newPanneau_cancel();
   }
   else {
     alert('Nom du panneau obligatoire\nVille obligatoire');
   }
-  
+
 }
 
 function newPanneau_after(response) {
@@ -845,9 +901,11 @@ function selection_panneau(idx) {
   let pos = tabSelect.indexOf(panneaux[idx]['id']);
   if (pos == -1) {
     tabSelect.push(panneaux[idx]['id']);
+
   }
   else {
     tabSelect.splice(pos, 1);
+
   }
 
 
@@ -881,10 +939,10 @@ function newIti_after() {
 }
 
 function edit_panneau(idx) {
-  
+
   curIdx = idx;
   send('choix', null, edit_panneau_init, edit_panneau_init, {})
-  
+
 }
 
 function edit_panneau_init(idx) {

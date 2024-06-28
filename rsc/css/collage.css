@@ -230,3 +230,77 @@
 	height: 100%;
 	z-index: 2000;
   }
+
+
+  .fraicheur_0{
+	color: white;
+	text-shadow: 0 0 black;
+	background-color: green;
+	margin:2px;
+	border:1px solid white;
+	border-radius:3px;
+	padding-left:3px;
+	padding-right:3px;
+  }
+  .fraicheur_1{
+	color: white;
+	text-shadow: 0 0 black;
+	background-color: yellow;
+	margin:2px;
+	border:1px solid white;
+	border-radius:3px;
+	padding-left:3px;
+	padding-right:3px;
+  }
+  .fraicheur_2{
+	color: white;
+	text-shadow: 0 0 black;
+	background-color: orange;
+	margin:2px;
+	border:1px solid white;
+	border-radius:3px;
+	padding-left:3px;
+	padding-right:3px;
+  }
+  .fraicheur_3{
+	color: white;
+	text-shadow: 0 0 black;
+	background-color: red;
+	margin:2px;
+	border:1px solid white;
+	border-radius:3px;
+	padding-left:3px;
+	padding-right:3px;
+  }
+  .fraicheur_4{
+	color: white;
+	text-shadow: 0 0 black;
+	background-color: black;
+	margin:2px;
+	border:1px solid white;
+	border-radius:3px;
+	padding-left:3px;
+	padding-right:3px;
+  }
+
+  .Officiel{
+	text-shadow: 0 0 black;
+	background-color: blue;
+	color: white;
+	margin:2px;
+	border:1px solid white;
+	border-radius:3px;
+	padding-left:3px;
+	padding-right:3px;
+  }
+
+  .Libre{
+	text-shadow: 0 0 black;
+	background-color: hotpink;
+	color: white;
+	margin:2px;
+	border:1px solid white;
+	border-radius:3px;
+	padding-left:3px;
+	padding-right:3px;
+  }
