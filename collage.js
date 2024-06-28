@@ -239,7 +239,7 @@ function initMap() {
       popup += '<br/><br/><a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Editer</a>';
       popup += '<br/><br/><a href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',0)">Sélection</a>';
       if (tabSelect.length > 0) {
-        popup += '<br/>&nbsp;&nbsp;&nbsp;<a href="" onclick="selection_save()">Enregistrer sélection</a>';
+        popup += '<br/><br/>&nbsp;&nbsp;&nbsp;<a href="" onclick="selection_save()">Enregistrer&bsp;sélection</a>';
       }
 
       popup += '</td></tr></table>';
@@ -400,6 +400,8 @@ function initIti() {
 
   for (var i = 0; i < panneaux.length; i++) {
 
+    let selected = (tabSelect.indexOf(panneaux[i]['id'])!=-1);
+
     var coord = panneaux[i]['coord'].replace(' ', '').split(",");
     var icon = greenIcon;
     var officiel = (panneaux[i]['officiel'] == 'TRUE') ? 'Officiel' : 'Libre';
@@ -428,6 +430,10 @@ function initIti() {
       addClassList = 'list_current';
     }
 
+    if (selected) {
+      addClassList+=' is_selected';
+    }
+
 
 
 
@@ -443,8 +449,8 @@ function initIti() {
     sHtml += '&nbsp;&nbsp;&nbsp;<a href="" onclick="edit_panneau(' + i + ',' + panneaux[i]['id'] + ',1)">Edit</a>&nbsp;&nbsp;&nbsp;';
 
 
-    let pos = tabSelect.indexOf(panneaux[i]['id']);
-    if (pos == -1) {
+    
+    if (!selected) {
       sHtml += '&nbsp;&nbsp;&nbsp;<a id="selection_' + i + '" href="" onclick="selection_panneau(' + i + ',' + panneaux[i]['id'] + ',1)">Sélection</a>&nbsp;&nbsp;&nbsp;';
 
     }
@@ -469,6 +475,9 @@ function initIti() {
   $('#table_iti')[0].innerHTML = sHtml;
   //alert(nbTrue+'\n'+nbFalse);
 
+
+
+    $("#btSelection")[0].style.display = ((tabSelect.length > 0) ? '' : 'none');
 
 
 }

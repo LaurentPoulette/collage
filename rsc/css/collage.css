@@ -304,3 +304,12 @@
 	padding-left:3px;
 	padding-right:3px;
   }
+
+  .is_selected{
+	background-color: yellow;
+	color:black
+  }
+
+  .is_selected a,.is_selected a:visited{
+	color: black};
+

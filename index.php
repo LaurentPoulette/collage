@@ -235,6 +235,7 @@ echo "<script>var isIti=" . ($isIti ? 'true' : 'false') . ";</script>";
                         </tr>
                     </table>
                     <button onclick="cancelIti()">Sortir de l'itinéraire en cours</button>
+                    <button id="btSelection" style="display: none" onclick="selection_save()">Enregistrer sélection</button>
 
                     <div id="table_iti">
 
